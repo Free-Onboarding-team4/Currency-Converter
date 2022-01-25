@@ -25,7 +25,6 @@ export const ResultBox = ({
     };
     handleTab();
   }, [currency, setCurrentTab]);
-  console.log(date);
   return (
     <ResultBoxContainer>
       <Tabs>
