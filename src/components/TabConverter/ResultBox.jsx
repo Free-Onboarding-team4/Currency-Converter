@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { BORDER, TAB_CURRENCY } from "../../constants";
-import { DateConverter } from "../../utils/dateConverter";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { BORDER, TAB_CURRENCY } from '../../constants';
+import { DateConverter } from '../../utils/dateConverter';
 
 export const ResultBox = ({
   currentTab,
@@ -9,13 +9,20 @@ export const ResultBox = ({
   currency,
   apiData,
   inputValue,
-  isLoading,
 }) => {
   const [tabs, setTabs] = useState(TAB_CURRENCY);
-  const writtenMoney = Number(inputValue.split(",").join(""));
+  const writtenMoney = Number(inputValue.split(',').join(''));
   const date = DateConverter(apiData.date);
   const handleClick = (e) => {
     setCurrentTab(e.target.innerHTML);
+  };
+  const calculator = (target, base) => {
+    let targetRate = apiData.quotes[`USD${target}`];
+    let baseRate = apiData.quotes[`USD${base}`];
+    let exchangeRate = Number((targetRate / baseRate) * writtenMoney);
+    return exchangeRate.toLocaleString('en', {
+      maximumFractionDigits: 2,
+    });
   };
   useEffect(() => {
     const handleTab = () => {
@@ -32,7 +39,7 @@ export const ResultBox = ({
           <li
             key={index}
             onClick={(e) => handleClick(e)}
-            className={tab === currentTab ? "active" : null}
+            className={tab === currentTab ? 'active' : null}
           >
             {tab}
           </li>
@@ -41,16 +48,10 @@ export const ResultBox = ({
       <TabResultBox>
         <p>
           {currentTab}&nbsp;
-          {isLoading
-            ? "0"
-            : Number(
-                (apiData.quotes[`USD${currentTab}`] /
-                  apiData.quotes[`USD${currency}`]) *
-                  Number(writtenMoney)
-              ).toLocaleString("en", { maximumFractionDigits: 2 })}
+          {!apiData.quotes ? '0' : calculator(currentTab, currency)}
         </p>
         <span>기준일 :</span>
-        <span className="date">{isLoading ? "Loading..." : date}</span>
+        <span className='date'>{!apiData.quotes ? 'Loading...' : date}</span>
       </TabResultBox>
     </ResultBoxContainer>
   );
