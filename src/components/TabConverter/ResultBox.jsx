@@ -2,9 +2,16 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { BORDER } from '../../constants';
 
-export const ResultBox = ({ currentTab, setCurrentTab, currency }) => {
+export const ResultBox = ({
+  currentTab,
+  setCurrentTab,
+  currency,
+  apiData,
+  inputValue,
+}) => {
   const defaultTabs = ['USD', 'CAD', 'KRW', 'HKD', 'JPY', 'CNY'];
   const [tabs, setTabs] = useState(defaultTabs);
+  const writtenMoney = isNaN(inputValue) ? 1000 : inputValue;
   const handleClick = (e) => {
     setCurrentTab(e.target.innerHTML);
   };
@@ -30,9 +37,17 @@ export const ResultBox = ({ currentTab, setCurrentTab, currency }) => {
         ))}
       </Tabs>
       <TabResultBox>
-        <p>CAD 2,000.00</p>
+        <p>
+          {currentTab}&nbsp;
+          {apiData.quotes &&
+            Number(
+              (apiData.quotes[`USD${currentTab}`] /
+                apiData.quotes[`USD${currency}`]) *
+                Number(writtenMoney)
+            ).toLocaleString('en', { maximumFractionDigits: 2 })}
+        </p>
         <span>기준일 :</span>
-        <span className="date">2022-Jan-01</span>
+        <span className='date'>2022-Jan-01</span>
       </TabResultBox>
     </ResultBoxContainer>
   );
