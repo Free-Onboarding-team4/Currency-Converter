@@ -5,17 +5,13 @@ import { API_ENDPOINT } from "../../constants";
 import styled from "styled-components";
 
 export const SelectConverter = () => {
+  const [hide, setHide] = useState(false);
+  const [number, setNumber] = useState(0);
   const [current, setCurrent] = useState(0);
   const [data, setData] = useState(0);
 
-  const onClickUp = () => {
-    if (current === 0) return;
-    setCurrent(current - 1);
-  };
-
-  const onClickDown = () => {
-    if (current === ConDate.length - 1) return;
-    setCurrent(current + 1);
+  const handleChange = (e) => {
+    setCurrent(e.target.value);
   };
 
   useEffect(() => {
@@ -30,6 +26,23 @@ export const SelectConverter = () => {
       });
   }, [current, data]);
 
+  const onChange = (e) => {
+    setNumber(e.target.value);
+    setHide(false);
+  };
+
+  const exChange = () => {
+    let result = number * data;
+    return result.toLocaleString(undefined, { minimumFractionDigits: 2 });
+  };
+
+  const showResult = () => {
+    if (number <= 0 || number > 10000 || !number) {
+      return alert("송금액이 올바르지 않습니다.");
+    }
+    setHide(true);
+  };
+
   return (
     <Container>
       <Header>환율 계산</Header>
@@ -39,35 +52,53 @@ export const SelectConverter = () => {
           <ConContainer>
             수취국가:
             <UpDownContainer>
-              {ConDate[current].label}
-              <ArrowContainer>
-                <UpDown onClick={onClickUp}>위</UpDown>
-                <UpDown onClick={onClickDown}>아</UpDown>
-              </ArrowContainer>
+              <Select onChange={handleChange} name="country">
+                {ConDate.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.label}
+                  </option>
+                ))}
+              </Select>
             </UpDownContainer>
           </ConContainer>
           <li>
             환율:
-            {data}
-            {Country[current].label}/USD
+            <Count>
+              {data}
+              {Country[current].label}/USD
+            </Count>
           </li>
           <li>
             송금액:
-            <MoneyInput type="number" placeholder="숫자를 입력해주세요." />
+            <MoneyInput
+              type="number"
+              onChange={onChange}
+              placeholder="숫자를 입력해주세요."
+            />
             USD
           </li>
         </ul>
-        <Button type="submit">Submit</Button>
+        <Button type="button" onClick={showResult}>
+          Submit
+        </Button>
+        {hide ? (
+          <Result>
+            수취금액은 {exChange()} {Country[current].label} 입니다.
+          </Result>
+        ) : null}
       </form>
     </Container>
   );
 };
 
+const Result = styled.div`
+  margin-top: 20px;
+`;
+
 const Button = styled.button`
-  border: solid 1px gray;
-  margin: 8px 3px;
+  border: solid 1px black;
+  margin: 10px 3px;
   padding: 7px 50px;
-  background: linear-gradient(gray, white);
   font-size: 15px;
   font-weight: bold;
 `;
@@ -91,9 +122,18 @@ const MoneyInput = styled.input`
   }
 `;
 
-const ArrowContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+const Select = styled.select`
+  width: 120px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Eo_circle_blue_arrow-up-down.svg/1024px-Eo_circle_blue_arrow-up-down.svg.png")
+    no-repeat 101% 10%;
+  background-size: contain;
+`;
+
+const Count = styled.div`
+  display: inline-block;
   margin-left: 5px;
 `;
 
@@ -109,11 +149,8 @@ const ConContainer = styled.li`
 
 const UpDownContainer = styled.div`
   display: flex;
-  padding-left: 5px;
-`;
-
-const UpDown = styled.div`
-  cursor: pointer;
-  width: 30px;
-  font-size: 10px;
+  margin-left: 5px;
+  padding: 0 7px;
+  border: solid 1px black;
+  border-radius: 5px;
 `;
