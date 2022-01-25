@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ConDate } from "../../constants";
 import { Country } from "../../constants";
 import { API_ENDPOINT } from "../../constants";
@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 export const SelectConverter = () => {
   const [current, setCurrent] = useState(0);
+  const [data, setData] = useState(0);
 
   const onClickUp = () => {
     if (current === 0) return;
@@ -17,9 +18,17 @@ export const SelectConverter = () => {
     setCurrent(current + 1);
   };
 
-  fetch(API_ENDPOINT)
-    .then((res) => res.json())
-    .then((data) => console.log(data));
+  useEffect(() => {
+    fetch(API_ENDPOINT)
+      .then((res) => res.json())
+      .then((data) => {
+        for (const key in data.quotes) {
+          if (Country[current].label === key.substring(3, 6)) {
+            setData(data.quotes[key].toFixed(2));
+          }
+        }
+      });
+  }, [current, data]);
 
   return (
     <Container>
@@ -38,7 +47,8 @@ export const SelectConverter = () => {
             </UpDownContainer>
           </ConContainer>
           <li>
-            환율: {}
+            환율:
+            {data}
             {Country[current].label}/USD
           </li>
           <li>
