@@ -1,70 +1,102 @@
-# Getting Started with Create React App
+## 프로젝트 소개
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> 주어진 API를 활용하여 두 종류의 환율 계산기가 각각 작동하도록 구현하는 프로젝트
+> 
 
-## Available Scripts
+## 팀원 소개
 
-In the project directory, you can run:
+| 팀 구성 | 담당 |
+| --- | --- |
+| 이현호, 윤창현 | 선택박스 계산기 (SelectConverter) |
+| 박훈주, 이주영 | 탭 계산기 (TabConverter) |
 
-### `npm start`
+## 배포 주소
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[wanted-currency-converter.netlify.app](https://wanted-currency-converter.netlify.app/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 사용 기술 및 스택
 
-### `npm test`
+- Stack
+    - React Hooks
+    - styled-components
+    - fetch
+    - Deploy : Netilfy
+    - Other : Git / GitHub
+    - Build Tool (Create React App)
+    - Code Quality Tool (Prettier)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 과제 구현 목록
 
-### `npm run build`
+- **Select Box Converter (이현호, 윤창현)**
+    - 레이아웃 및 UI ( SelectConverter )
+    - API 데이터 받아 사용 ( utils/fetcher )
+    - 리스트 위아래 선택 박스
+    - current에 따른 수취국가 환율 표시
+    - 결과값에 따른 환전값 반환
+    
+- **Tab Box Converter (박훈주, 이주영)**
+    - 레이아웃 및 UI 구현
+    - 선택된 통화의 종류에 따라 Tab의 구성이 유동적으로 변화되도록 구현
+    - 선택된 Tab의 `border-bottom`만 제거되도록 구현
+    - 회계/통화 형식에 맞춰 숫자들에 콤마가 천의 자리마다 찍힐 수 있도록 구현
+    - 선택된 통화와 입력된 값을 통해 원하는 해외국가의 환율이 계산될 수 있도록 구현
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## CRA 구조
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```markdown
+src
+│ 
+├─components
+│  │  
+│  └─SelectConverter  
+│  │       SelectConverter.jsx
+│  └─TabConverter
+│          TabConverter.jsx
+│
+├─constants
+│      index.js
+│
+├─pages
+│     MainPage.jsx
+│
+├─styles
+│     GlobalStyles.js
+│ 
+├─utils
+│     fetcher.js
+│
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 커밋 컨벤션
 
-### `npm run eject`
+깃모지를 사용하여 직관성을 높이고, 기능이나 UI 설계에 따른 메세지를 커밋 메세지에 담는것을 컨벤션으로 결정했습니다. 깃모지로 인해 상대방이 어떤 작업을 수행했는지 한 눈에 확인할 수 있고, 메세지를 보며 조금 더 상세한 상황을 파악할 수 있습니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+| 깃모지 | 사용 예시 |
+| --- | --- |
+| 🎉 | init |
+| 🚚 | 디렉토리 또는 파일 이동 |
+| ✨ | 기능 구현 |
+| 💄 | CSS 스타일링 |
+| ♻️ | 리팩토링 |
+| 📝 | Readme 수정 |
+| ➕ | 모듈 추가 |
+| 🐛 | 버그 해결 |
+| 🚑️ | 치명적인 오류 해결 |
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 과제 후기
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### **이현호** 😎
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+라이브 코딩을 하다보니 긴장도 되었지만, 막히는 부분에서 함께 고민하며 나아가는 모습을 보고 페어 프로그래밍의 중요성을 알게되었습니다. 그리고 제가 잘 아는 부분에 대해서 설명하면서 프로젝트를 설계하는 것으로 기초를 다시 다지게 되는 경험이 되었습니다.
 
-## Learn More
+### 윤창현 ✨
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+명확한 업무분담과 빠르고 정확한 협업과 소통으로 프로젝트를 완성 하였고, 한걸음 더 발전할 수 있었던 좋은 시간이었습니다.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### **박훈주** 🎅
 
-### Code Splitting
+사실 항상 독학을 하며 코딩을 해왔었기에 협업에 익숙하지 않았었습니다. 하지만 팀원들의 도움으로 원활하게 협업하는 방식을 배울 수 있었고, 생각보다 코딩을 할 때 고려해야 할 것들이 많음을 새삼 깨달았습니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### **이주영 🙋‍♀️**
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+이번 과제를 통해 깃으로 pull request를 하며 협업하는 방식을 익힐 수 있었습니다. 이외에도 정해진 팀원과 함께한 짝 프로그래밍을 통해 몰랐던 부분이나 막히는 부분을 같이 고민하고 해결할 수 있었습니다.
