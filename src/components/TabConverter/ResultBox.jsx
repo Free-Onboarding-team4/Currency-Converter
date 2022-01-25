@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { BORDER, TAB_CURRENCY } from '../../constants';
-import { DateConverter } from '../../utils/dateConverter';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { BORDER, TAB_CURRENCY } from "../../constants";
+import { DateConverter } from "../../utils/dateConverter";
 
 export const ResultBox = ({
   currentTab,
@@ -12,7 +12,7 @@ export const ResultBox = ({
   isLoading,
 }) => {
   const [tabs, setTabs] = useState(TAB_CURRENCY);
-  const writtenMoney = isNaN(inputValue) ? 1000 : inputValue;
+  const writtenMoney = Number(inputValue.split(",").join(""));
   const date = DateConverter(apiData.date);
   const handleClick = (e) => {
     setCurrentTab(e.target.innerHTML);
@@ -32,7 +32,7 @@ export const ResultBox = ({
           <li
             key={index}
             onClick={(e) => handleClick(e)}
-            className={tab === currentTab ? 'active' : null}
+            className={tab === currentTab ? "active" : null}
           >
             {tab}
           </li>
@@ -42,15 +42,15 @@ export const ResultBox = ({
         <p>
           {currentTab}&nbsp;
           {isLoading
-            ? '0'
+            ? "0"
             : Number(
                 (apiData.quotes[`USD${currentTab}`] /
                   apiData.quotes[`USD${currency}`]) *
                   Number(writtenMoney)
-              ).toLocaleString('en', { maximumFractionDigits: 2 })}
+              ).toLocaleString("en", { maximumFractionDigits: 2 })}
         </p>
         <span>기준일 :</span>
-        <span className='date'>{isLoading ? 'Loading...' : date}</span>
+        <span className="date">{isLoading ? "Loading..." : date}</span>
       </TabResultBox>
     </ResultBoxContainer>
   );

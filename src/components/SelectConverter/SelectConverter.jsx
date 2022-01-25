@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ConDate } from "../../constants";
 import { Country } from "../../constants";
-import { API_ENDPOINT } from "../../constants";
+import { API_ENDPOINT, SELECT_CURRENCY } from "../../constants";
 import styled from "styled-components";
 
 export const SelectConverter = () => {
@@ -15,7 +15,7 @@ export const SelectConverter = () => {
   };
 
   useEffect(() => {
-    fetch(API_ENDPOINT)
+    fetch(API_ENDPOINT(SELECT_CURRENCY.join(",")))
       .then((res) => res.json())
       .then((data) => {
         for (const key in data.quotes) {
