@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ConDate } from "../../constants";
 import { Country } from "../../constants";
 import { API_ENDPOINT } from "../../constants";
@@ -6,6 +6,9 @@ import styled from "styled-components";
 
 export const SelectConverter = () => {
   const [current, setCurrent] = useState(0);
+  const [krw, setKrw] = useState(0);
+  const [jpy, setJpy] = useState(0);
+  const [php, setPhp] = useState(0);
 
   const onClickUp = () => {
     if (current === 0) return;
@@ -17,9 +20,15 @@ export const SelectConverter = () => {
     setCurrent(current + 1);
   };
 
-  fetch(API_ENDPOINT)
-    .then((res) => res.json())
-    .then((data) => console.log(data));
+  useEffect(() => {
+    fetch(API_ENDPOINT)
+      .then((res) => res.json())
+      .then((data) => {
+        setKrw(data.quotes.USDKRW);
+        setJpy(data.quotes.USDJPY);
+        setPhp(data.quotes.USDPHP);
+      });
+  }, [krw, jpy, php]);
 
   return (
     <Container>
@@ -38,7 +47,10 @@ export const SelectConverter = () => {
             </UpDownContainer>
           </ConContainer>
           <li>
-            환율: {}
+            환율:
+            {Country[current].label === "KRW" && krw}
+            {Country[current].label === "JPY" && jpy}
+            {Country[current].label === "PHP" && php}
             {Country[current].label}/USD
           </li>
           <li>
