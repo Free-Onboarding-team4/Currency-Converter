@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { BORDER } from '../../constants';
+import { BORDER, TAB_CURRENCY } from '../../constants';
+import { DateConverter } from '../../utils/dateConverter';
 
-export const ResultBox = ({ currentTab, setCurrentTab, currency }) => {
-  const defaultTabs = ['USD', 'CAD', 'KRW', 'HKD', 'JPY', 'CNY'];
-  const [tabs, setTabs] = useState(defaultTabs);
+export const ResultBox = ({
+  currentTab,
+  setCurrentTab,
+  currency,
+  apiData,
+  inputValue,
+  isLoading,
+}) => {
+  const [tabs, setTabs] = useState(TAB_CURRENCY);
+  const writtenMoney = isNaN(inputValue) ? 1000 : inputValue;
+  const date = DateConverter(apiData.date);
   const handleClick = (e) => {
     setCurrentTab(e.target.innerHTML);
   };
-  const handleTab = () => {
-    let changedTabs = defaultTabs.filter((tab) => tab !== currency);
-    setTabs(changedTabs);
-    setCurrentTab(changedTabs[0]);
-  };
   useEffect(() => {
+    const handleTab = () => {
+      let changedTabs = TAB_CURRENCY.filter((tab) => tab !== currency);
+      setTabs(changedTabs);
+      setCurrentTab(changedTabs[0]);
+    };
     handleTab();
-  }, [currency]);
+  }, [currency, setCurrentTab]);
+  console.log(date);
   return (
     <ResultBoxContainer>
       <Tabs>
@@ -30,9 +40,18 @@ export const ResultBox = ({ currentTab, setCurrentTab, currency }) => {
         ))}
       </Tabs>
       <TabResultBox>
-        <p>CAD 2,000.00</p>
+        <p>
+          {currentTab}&nbsp;
+          {isLoading
+            ? '0'
+            : Number(
+                (apiData.quotes[`USD${currentTab}`] /
+                  apiData.quotes[`USD${currency}`]) *
+                  Number(writtenMoney)
+              ).toLocaleString('en', { maximumFractionDigits: 2 })}
+        </p>
         <span>기준일 :</span>
-        <span className="date">2022-Jan-01</span>
+        <span className='date'>{isLoading ? 'Loading...' : date}</span>
       </TabResultBox>
     </ResultBoxContainer>
   );
