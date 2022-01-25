@@ -8,8 +8,16 @@ export const FormBox = ({ setCurrency, inputValue, setInputValue }) => {
     setInputValue('');
   };
   const handleType = (e) => {
-    if (e.target.value >= 1000) {
-      setInputValue(Number(1000).toLocaleString('en'));
+    const pureString = e.target.value.split(',').join('');
+    if (isNaN(Number(pureString))) {
+      return;
+    }
+    if (Number(pureString) >= 1000) {
+      setInputValue(
+        Number(pureString).toLocaleString('en', {
+          maximumFractionDigits: 3,
+        })
+      );
       return;
     }
     setInputValue(e.target.value);
@@ -18,7 +26,6 @@ export const FormBox = ({ setCurrency, inputValue, setInputValue }) => {
     <FormBoxContainer onSubmit={(e) => e.preventDefault()}>
       <input
         type='text'
-        maxLength='4'
         placeholder='값을 입력하세요'
         value={inputValue}
         onChange={(e) => handleType(e)}
