@@ -6,9 +6,7 @@ import styled from "styled-components";
 
 export const SelectConverter = () => {
   const [current, setCurrent] = useState(0);
-  const [krw, setKrw] = useState(0);
-  const [jpy, setJpy] = useState(0);
-  const [php, setPhp] = useState(0);
+  const [data, setData] = useState(0);
 
   const onClickUp = () => {
     if (current === 0) return;
@@ -24,11 +22,13 @@ export const SelectConverter = () => {
     fetch(API_ENDPOINT)
       .then((res) => res.json())
       .then((data) => {
-        setKrw(data.quotes.USDKRW);
-        setJpy(data.quotes.USDJPY);
-        setPhp(data.quotes.USDPHP);
+        for (const key in data.quotes) {
+          if (Country[current].label === key.substring(3, 6)) {
+            setData(data.quotes[key].toFixed(2));
+          }
+        }
       });
-  }, [krw, jpy, php]);
+  }, [current, data]);
 
   return (
     <Container>
@@ -48,9 +48,7 @@ export const SelectConverter = () => {
           </ConContainer>
           <li>
             환율:
-            {Country[current].label === "KRW" && krw}
-            {Country[current].label === "JPY" && jpy}
-            {Country[current].label === "PHP" && php}
+            {data}
             {Country[current].label}/USD
           </li>
           <li>
