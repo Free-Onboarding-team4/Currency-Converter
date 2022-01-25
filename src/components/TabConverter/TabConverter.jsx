@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FormBox } from './FormBox';
 import { ResultBox } from './ResultBox';
-import { API_ENDPOINT } from '../../constants';
+import { API_ENDPOINT, TAB_CURRENCY } from '../../constants';
 
 export const TabConverter = () => {
   const [apiData, setApiData] = useState({});
@@ -10,7 +10,7 @@ export const TabConverter = () => {
   const [currency, setCurrency] = useState('USD');
   const [inputValue, setInputValue] = useState('');
   useEffect(() => {
-    fetch(API_ENDPOINT)
+    fetch(API_ENDPOINT(TAB_CURRENCY.join(',')))
       .then((res) => res.json())
       .then((data) => {
         setApiData({ quotes: data.quotes, date: data.timestamp });

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { BORDER } from '../../constants';
+import { BORDER, TAB_CURRENCY } from '../../constants';
 
 export const ResultBox = ({
   currentTab,
@@ -9,20 +9,19 @@ export const ResultBox = ({
   apiData,
   inputValue,
 }) => {
-  const defaultTabs = ['USD', 'CAD', 'KRW', 'HKD', 'JPY', 'CNY'];
-  const [tabs, setTabs] = useState(defaultTabs);
+  const [tabs, setTabs] = useState(TAB_CURRENCY);
   const writtenMoney = isNaN(inputValue) ? 1000 : inputValue;
   const handleClick = (e) => {
     setCurrentTab(e.target.innerHTML);
   };
-  const handleTab = () => {
-    let changedTabs = defaultTabs.filter((tab) => tab !== currency);
-    setTabs(changedTabs);
-    setCurrentTab(changedTabs[0]);
-  };
   useEffect(() => {
+    const handleTab = () => {
+      let changedTabs = TAB_CURRENCY.filter((tab) => tab !== currency);
+      setTabs(changedTabs);
+      setCurrentTab(changedTabs[0]);
+    };
     handleTab();
-  }, [currency]);
+  }, [currency, setCurrentTab]);
   return (
     <ResultBoxContainer>
       <Tabs>

@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BORDER } from '../../constants';
+import { BORDER, TAB_CURRENCY } from '../../constants';
 
 export const FormBox = ({ setCurrency, inputValue, setInputValue }) => {
-  const options = ['USD', 'CAD', 'KRW', 'HKD', 'JPY', 'CNY'];
   const handleChange = (e) => {
     setCurrency(e.target.value);
     setInputValue('');
@@ -26,7 +25,7 @@ export const FormBox = ({ setCurrency, inputValue, setInputValue }) => {
         onKeyUp={(e) => handleType(e)}
       />
       <select onChange={(e) => handleChange(e)} name='current'>
-        {options.map((opt, index) => (
+        {TAB_CURRENCY.map((opt, index) => (
           <option key={index} value={opt}>
             {opt}
           </option>
