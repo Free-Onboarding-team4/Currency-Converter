@@ -1,17 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { BORDER } from '../../constants';
 
-export const FormBox = () => {
+export const FormBox = ({ setCurrency }) => {
+  const [options, setOptions] = useState([
+    'USD',
+    'CAD',
+    'KRW',
+    'HKD',
+    'JPY',
+    'CNY',
+  ]);
+  const [inputValue, setInputValue] = useState('');
+  const handleChange = (e) => {
+    setCurrency(e.target.value);
+  };
+  const handleType = (e) => {
+    if (e.target.value > 1000) {
+      setInputValue(1000);
+      return;
+    }
+    setInputValue(e.target.value);
+  };
   return (
     <FormBoxContainer>
-      <input type='text' placeholder='값을 입력하세요' />
-      <select name='current'>
-        <option value='USD'>USD</option>
-        <option value='CAD'>CAD</option>
-        <option value='HKD'>HKD</option>
-        <option value='JPY'>JPY</option>
-        <option value='CNY'>CNY</option>
+      <input
+        type="text"
+        placeholder="값을 입력하세요"
+        value={inputValue}
+        onChange={(e) => handleType(e)}
+        onKeyUp={(e) => handleType(e)}
+      />
+      <select onChange={(e) => handleChange(e)} name="current">
+        {options.map((opt, index) => (
+          <option key={index} value={opt}>
+            {opt}
+          </option>
+        ))}
       </select>
     </FormBoxContainer>
   );

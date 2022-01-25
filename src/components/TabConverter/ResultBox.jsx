@@ -1,21 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { BORDER } from '../../constants';
 
-export const ResultBox = () => {
+export const ResultBox = ({ currentTab, setCurrentTab, currency }) => {
+  const defaultTabs = ['USD', 'CAD', 'KRW', 'HKD', 'JPY', 'CNY'];
+  const [tabs, setTabs] = useState(defaultTabs);
+  const handleClick = (e) => {
+    setCurrentTab(e.target.innerHTML);
+  };
+  const handleTab = () => {
+    let changedTabs = defaultTabs.filter((tab) => tab !== currency);
+    setTabs(changedTabs);
+    setCurrentTab(changedTabs[0]);
+  };
+  useEffect(() => {
+    handleTab();
+  }, [currency]);
   return (
     <ResultBoxContainer>
       <Tabs>
-        <li className='active'>CAD</li>
-        <li>KRW</li>
-        <li>HKD</li>
-        <li>JPY</li>
-        <li>CNY</li>
+        {tabs.map((tab, index) => (
+          <li
+            key={index}
+            onClick={(e) => handleClick(e)}
+            className={tab === currentTab ? 'active' : null}
+          >
+            {tab}
+          </li>
+        ))}
       </Tabs>
       <TabResultBox>
         <p>CAD 2,000.00</p>
         <span>기준일 :</span>
-        <span className='date'>2022-Jan-01</span>
+        <span className="date">2022-Jan-01</span>
       </TabResultBox>
     </ResultBoxContainer>
   );
@@ -42,7 +59,6 @@ const Tabs = styled.ul`
     font-weight: bold;
     border: ${BORDER.SHORTCUT};
     cursor: pointer;
-
     &.active {
       border-bottom: none;
     }
