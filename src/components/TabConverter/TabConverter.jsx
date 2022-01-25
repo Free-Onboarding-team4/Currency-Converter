@@ -9,14 +9,15 @@ export const TabConverter = () => {
   const [currentTab, setCurrentTab] = useState('');
   const [currency, setCurrency] = useState('USD');
   const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     fetch(API_ENDPOINT(TAB_CURRENCY.join(',')))
       .then((res) => res.json())
       .then((data) => {
         setApiData({ quotes: data.quotes, date: data.timestamp });
+        setIsLoading(false);
       });
   }, [currency]);
-  console.log(apiData);
   return (
     <TabConverterContainer>
       <FormBox
@@ -30,6 +31,7 @@ export const TabConverter = () => {
         currency={currency}
         apiData={apiData}
         inputValue={inputValue}
+        isLoading={isLoading}
       />
     </TabConverterContainer>
   );

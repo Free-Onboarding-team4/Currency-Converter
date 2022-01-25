@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { BORDER, TAB_CURRENCY } from '../../constants';
+import { DateConverter } from '../../utils/dateConverter';
 
 export const ResultBox = ({
   currentTab,
@@ -8,9 +9,11 @@ export const ResultBox = ({
   currency,
   apiData,
   inputValue,
+  isLoading,
 }) => {
   const [tabs, setTabs] = useState(TAB_CURRENCY);
   const writtenMoney = isNaN(inputValue) ? 1000 : inputValue;
+  const date = DateConverter(apiData.date);
   const handleClick = (e) => {
     setCurrentTab(e.target.innerHTML);
   };
@@ -22,6 +25,7 @@ export const ResultBox = ({
     };
     handleTab();
   }, [currency, setCurrentTab]);
+  console.log(date);
   return (
     <ResultBoxContainer>
       <Tabs>
@@ -38,15 +42,16 @@ export const ResultBox = ({
       <TabResultBox>
         <p>
           {currentTab}&nbsp;
-          {apiData.quotes &&
-            Number(
-              (apiData.quotes[`USD${currentTab}`] /
-                apiData.quotes[`USD${currency}`]) *
-                Number(writtenMoney)
-            ).toLocaleString('en', { maximumFractionDigits: 2 })}
+          {isLoading
+            ? '0'
+            : Number(
+                (apiData.quotes[`USD${currentTab}`] /
+                  apiData.quotes[`USD${currency}`]) *
+                  Number(writtenMoney)
+              ).toLocaleString('en', { maximumFractionDigits: 2 })}
         </p>
         <span>기준일 :</span>
-        <span className='date'>2022-Jan-01</span>
+        <span className='date'>{isLoading ? 'Loading...' : date}</span>
       </TabResultBox>
     </ResultBoxContainer>
   );

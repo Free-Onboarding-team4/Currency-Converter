@@ -15,7 +15,7 @@ export const FormBox = ({ setCurrency, inputValue, setInputValue }) => {
     setInputValue(e.target.value);
   };
   return (
-    <FormBoxContainer>
+    <FormBoxContainer onSubmit={(e) => e.preventDefault()}>
       <input
         type='text'
         maxLength='4'
