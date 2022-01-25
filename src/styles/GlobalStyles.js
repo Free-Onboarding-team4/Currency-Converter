@@ -1,5 +1,6 @@
-import { createGlobalStyle } from "styled-components";
-import reset from "styled-reset";
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
+import { COLOR } from '../constants';
 
 const globalStyles = createGlobalStyle`
     ${reset};
@@ -9,7 +10,7 @@ const globalStyles = createGlobalStyle`
     html {
         line-height: 1.15;
         -webkit-text-size-adjust: 100%;
-        color: #444444;
+        color: ${COLOR.FONT};
         font-family: 'Noto Sans KR', sans-serif;
         @media screen and (max-width : 1400px){
         font-size : 14px;
@@ -22,7 +23,7 @@ const globalStyles = createGlobalStyle`
     body {
     margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
-    color: #444444;
+    color: ${COLOR.FONT};
     }
 
     main {
@@ -153,6 +154,9 @@ select,
 textarea:focus {
   outline: none;
   box-shadow: none;
+}
+input::placeholder {
+  color: ${COLOR.FONT}
 }
 a,
 button {
