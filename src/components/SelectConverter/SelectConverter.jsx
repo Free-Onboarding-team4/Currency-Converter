@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Country } from "../../constants";
-import { API_ENDPOINT, SELECT_CURRENCY } from "../../constants";
-import styled from "styled-components";
-import { SelectBox } from "./SelectBox";
+import React, { useEffect, useState } from 'react';
+import { Country } from '../../constants';
+import { API_ENDPOINT, SELECT_CURRENCY, COLOR } from '../../constants';
+import styled from 'styled-components';
+import { SelectBox } from './SelectBox';
 
 export const SelectConverter = () => {
   const [hide, setHide] = useState(false);
@@ -11,7 +11,7 @@ export const SelectConverter = () => {
   const [data, setData] = useState(0);
 
   useEffect(() => {
-    fetch(API_ENDPOINT(SELECT_CURRENCY.join(",")))
+    fetch(API_ENDPOINT(SELECT_CURRENCY.join(',')))
       .then((res) => res.json())
       .then((data) => {
         for (const key in data.quotes) {
@@ -34,7 +34,7 @@ export const SelectConverter = () => {
 
   const showResult = () => {
     if (number <= 0 || number > 10000 || !number) {
-      return alert("송금액이 올바르지 않습니다.");
+      return alert('송금액이 올바르지 않습니다.');
     }
     setHide(true);
   };
@@ -50,18 +50,18 @@ export const SelectConverter = () => {
           </ConContainer>
           <li>
             환율:
-            <Count>
-              {!data ? "Loading..." : data}
-              {Country[current].label}/USD
-            </Count>
+            {!data ? (
+              <span className='failed'>다시 시도해주세요.</span>
+            ) : (
+              <Count>
+                {data}
+                {Country[current].label}/USD
+              </Count>
+            )}
           </li>
           <li>
             송금액:
-            <MoneyInput
-              type="number"
-              onChange={onChange}
-              placeholder="숫자를 입력해주세요."
-            />
+            <MoneyInput type='number' onChange={onChange} placeholder='숫자를 입력해주세요.' />
             USD
           </li>
         </ul>
@@ -70,7 +70,7 @@ export const SelectConverter = () => {
             수취금액은 {exChange()} {Country[current].label} 입니다.
           </Result>
         ) : null}
-        <Button type="button" onClick={showResult}>
+        <Button type='button' onClick={showResult}>
           Submit
         </Button>
       </form>
@@ -141,6 +141,12 @@ const Container = styled.section`
       flex-direction: column;
       justify-content: space-evenly;
       height: 200px;
+    }
+
+    .failed {
+      margin-left: 10px;
+      color: ${COLOR.BACKGROUND};
+      font-weight: 700;
     }
   }
 `;

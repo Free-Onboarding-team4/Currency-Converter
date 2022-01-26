@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { BORDER, TAB_CURRENCY } from '../../constants';
+import { BORDER, TAB_CURRENCY, COLOR } from '../../constants';
 import { DateConverter } from '../../utils/dateConverter';
 
-export const ResultBox = ({
-  currentTab,
-  setCurrentTab,
-  currency,
-  apiData,
-  inputValue,
-}) => {
+export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiData, inputValue }) => {
   const [tabs, setTabs] = useState(TAB_CURRENCY);
   const writtenMoney = Number(inputValue.split(',').join(''));
   const date = DateConverter(apiData.date);
@@ -36,22 +30,31 @@ export const ResultBox = ({
     <ResultBoxContainer>
       <Tabs>
         {tabs.map((tab, index) => (
-          <li
-            key={index}
-            onClick={(e) => handleClick(e)}
-            className={tab === currentTab ? 'active' : null}
-          >
+          <li key={index} onClick={(e) => handleClick(e)} className={tab === currentTab ? 'active' : null}>
             {tab}
           </li>
         ))}
       </Tabs>
       <TabResultBox>
-        <p>
-          {currentTab}&nbsp;
-          {!apiData.quotes ? '0' : calculator(currentTab, currency)}
-        </p>
-        <span>기준일 :</span>
-        <span className='date'>{!apiData.quotes ? 'Loading...' : date}</span>
+        <CurrencyResult>
+          <p>
+            {currentTab}&nbsp;
+            {!apiData.quotes ? '0' : calculator(currentTab, currency)}
+          </p>
+          <span>기준일 :</span>
+          <span className='date'>{isLoading || !apiData.quotes ? '' : date}</span>
+        </CurrencyResult>
+        {(isLoading || !apiData.quotes) && (
+          <LoadResult>
+            {(isLoading && <p></p>) ||
+              (!apiData.quotes && (
+                <p className='failed'>
+                  환율 정보를 불러올 수 없습니다. <br />
+                  다시 시도해주세요.
+                </p>
+              ))}
+          </LoadResult>
+        )}
       </TabResultBox>
     </ResultBoxContainer>
   );
@@ -89,11 +92,15 @@ const Tabs = styled.ul`
 `;
 
 const TabResultBox = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   border: ${BORDER.SHORTCUT};
   border-top: none;
   height: 75%;
+`;
 
+const CurrencyResult = styled.div`
   p {
     font-size: 20px;
     font-weight: 700;
@@ -108,5 +115,20 @@ const TabResultBox = styled.div`
     &.date {
       font-weight: 700;
     }
+  }
+`;
+
+const LoadResult = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  line-height: 1.4;
+
+  p.failed {
+    font-size: 16px;
+    color: ${COLOR.BACKGROUND};
+    font-weight: 700;
   }
 `;
