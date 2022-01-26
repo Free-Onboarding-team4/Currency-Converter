@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { ConDate } from '../../constants';
-import { Country } from '../../constants';
-import { API_ENDPOINT, SELECT_CURRENCY } from '../../constants';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import { Country } from "../../constants";
+import { API_ENDPOINT, SELECT_CURRENCY } from "../../constants";
+import styled from "styled-components";
+import { SelectBox } from "./SelectBox";
 
 export const SelectConverter = () => {
   const [hide, setHide] = useState(false);
@@ -10,12 +10,8 @@ export const SelectConverter = () => {
   const [current, setCurrent] = useState(0);
   const [data, setData] = useState(0);
 
-  const handleChange = (e) => {
-    setCurrent(e.target.value);
-  };
-
   useEffect(() => {
-    fetch(API_ENDPOINT(SELECT_CURRENCY.join(',')))
+    fetch(API_ENDPOINT(SELECT_CURRENCY.join(",")))
       .then((res) => res.json())
       .then((data) => {
         for (const key in data.quotes) {
@@ -38,7 +34,7 @@ export const SelectConverter = () => {
 
   const showResult = () => {
     if (number <= 0 || number > 10000 || !number) {
-      return alert('송금액이 올바르지 않습니다.');
+      return alert("송금액이 올바르지 않습니다.");
     }
     setHide(true);
   };
@@ -50,30 +46,21 @@ export const SelectConverter = () => {
         <ul>
           <li>송금국가: 미국(USD)</li>
           <ConContainer>
-            수취국가:
-            <UpDownContainer>
-              <Select onChange={handleChange} name='country'>
-                {ConDate.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.label}
-                  </option>
-                ))}
-              </Select>
-            </UpDownContainer>
+            수취국가: <SelectBox setCurrent={setCurrent} />
           </ConContainer>
           <li>
             환율:
             <Count>
-              {data}
+              {!data ? "Loading..." : data}
               {Country[current].label}/USD
             </Count>
           </li>
           <li>
             송금액:
             <MoneyInput
-              type='number'
+              type="number"
               onChange={onChange}
-              placeholder='숫자를 입력해주세요.'
+              placeholder="숫자를 입력해주세요."
             />
             USD
           </li>
@@ -83,7 +70,7 @@ export const SelectConverter = () => {
             수취금액은 {exChange()} {Country[current].label} 입니다.
           </Result>
         ) : null}
-        <Button type='button' onClick={showResult}>
+        <Button type="button" onClick={showResult}>
           Submit
         </Button>
       </form>
@@ -129,16 +116,6 @@ const MoneyInput = styled.input`
   }
 `;
 
-const Select = styled.select`
-  width: 120px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Eo_circle_blue_arrow-up-down.svg/1024px-Eo_circle_blue_arrow-up-down.svg.png')
-    no-repeat 101% 10%;
-  background-size: contain;
-`;
-
 const Count = styled.div`
   display: inline-block;
   margin-left: 5px;
@@ -170,12 +147,4 @@ const Container = styled.section`
 
 const ConContainer = styled.li`
   display: flex;
-`;
-
-const UpDownContainer = styled.div`
-  display: flex;
-  margin-left: 5px;
-  padding: 0 7px;
-  border: solid 1px black;
-  border-radius: 5px;
 `;
