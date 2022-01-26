@@ -17,7 +17,7 @@
 
 ## 배포 주소
 
-[wanted-currency-converter.netlify.app](https://wanted-currency-converter.netlify.app/)
+[http://beefplz.s3-website.ap-northeast-2.amazonaws.com/](http://beefplz.s3-website.ap-northeast-2.amazonaws.com/)
 
 <br/>
 
@@ -50,10 +50,8 @@
   - [x] input 박스에 숫자만 입력되도록 설정 후 회계/통화 형식에 맞춰 콤마(,)가 천의 자리마다 찍힐 수 있도록 구현 ex) ‘2000’ 입력 시 ‘2,000’ 으로 출력
   - [x] API를 통해 실시간으로 환율 데이터를 가져와서 환율 계산기 구현.
         환율 연산식 : `input 입력값 * (탭에서 선택된 통화 / 드롭다운에서 선택된 통화)`
-       
   ![KakaoTalk_20220125_234904701](https://user-images.githubusercontent.com/68415905/151002683-be73a86b-e061-4fb4-8622-96386cf724de.gif)
   ![KakaoTalk_20220125_234134991](https://user-images.githubusercontent.com/68415905/151002667-3d6e7940-2827-45a6-8ec7-723571e517c9.gif)
-
 
 <br/>
 
