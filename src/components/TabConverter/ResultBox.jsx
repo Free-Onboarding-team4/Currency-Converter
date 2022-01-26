@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { BORDER, TAB_CURRENCY } from '../../constants';
+import { BORDER, TAB_CURRENCY, COLOR } from '../../constants';
 import { DateConverter } from '../../utils/dateConverter';
 
 export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiData, inputValue }) => {
@@ -128,5 +128,11 @@ const LoadResult = styled.div`
 
   p.loading {
     font-size: 20px;
+  }
+
+  p.failed {
+    font-size: 16px;
+    color: ${COLOR.BACKGROUND};
+    font-weight: 700;
   }
 `;
