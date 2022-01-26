@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { ConDate } from "../../constants";
-import { Country } from "../../constants";
-import { API_ENDPOINT, SELECT_CURRENCY } from "../../constants";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import { ConDate } from '../../constants';
+import { Country } from '../../constants';
+import { API_ENDPOINT, SELECT_CURRENCY } from '../../constants';
+import styled from 'styled-components';
 
 export const SelectConverter = () => {
   const [hide, setHide] = useState(false);
@@ -15,7 +15,7 @@ export const SelectConverter = () => {
   };
 
   useEffect(() => {
-    fetch(API_ENDPOINT(SELECT_CURRENCY.join(",")))
+    fetch(API_ENDPOINT(SELECT_CURRENCY.join(',')))
       .then((res) => res.json())
       .then((data) => {
         for (const key in data.quotes) {
@@ -38,7 +38,7 @@ export const SelectConverter = () => {
 
   const showResult = () => {
     if (number <= 0 || number > 10000 || !number) {
-      return alert("송금액이 올바르지 않습니다.");
+      return alert('송금액이 올바르지 않습니다.');
     }
     setHide(true);
   };
@@ -52,7 +52,7 @@ export const SelectConverter = () => {
           <ConContainer>
             수취국가:
             <UpDownContainer>
-              <Select onChange={handleChange} name="country">
+              <Select onChange={handleChange} name='country'>
                 {ConDate.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.label}
@@ -71,21 +71,21 @@ export const SelectConverter = () => {
           <li>
             송금액:
             <MoneyInput
-              type="number"
+              type='number'
               onChange={onChange}
-              placeholder="숫자를 입력해주세요."
+              placeholder='숫자를 입력해주세요.'
             />
             USD
           </li>
         </ul>
-        <Button type="button" onClick={showResult}>
-          Submit
-        </Button>
         {hide ? (
           <Result>
             수취금액은 {exChange()} {Country[current].label} 입니다.
           </Result>
         ) : null}
+        <Button type='button' onClick={showResult}>
+          Submit
+        </Button>
       </form>
     </Container>
   );
@@ -98,20 +98,27 @@ const Result = styled.div`
 const Button = styled.button`
   border: solid 1px black;
   margin: 10px 3px;
-  padding: 7px 50px;
+  padding: 10px 50px;
   font-size: 15px;
   font-weight: bold;
+  border-radius: 10px;
+  border: none;
+  background-color: #3fc1c9;
+  color: #fff;
 `;
 
 const Header = styled.h1`
   margin: 5px 0;
   font-weight: bold;
+  font-size: 28px;
 `;
 
 const MoneyInput = styled.input`
   font-size: 14px;
   line-height: inherit;
   border: 1px solid #000;
+  border-radius: 5px;
+  padding: 0.1em 0.5em;
   margin: 0 5px;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -127,7 +134,7 @@ const Select = styled.select`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Eo_circle_blue_arrow-up-down.svg/1024px-Eo_circle_blue_arrow-up-down.svg.png")
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Eo_circle_blue_arrow-up-down.svg/1024px-Eo_circle_blue_arrow-up-down.svg.png')
     no-repeat 101% 10%;
   background-size: contain;
 `;
@@ -138,9 +145,27 @@ const Count = styled.div`
 `;
 
 const Container = styled.section`
+  width: 400px;
+  height: 400px;
+  padding: 30px;
+  border-radius: 15px;
   font-size: 18px;
   line-height: 1.5;
   color: #000;
+  background-color: #fff;
+  box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.75);
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 85%;
+    ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      height: 200px;
+    }
+  }
 `;
 
 const ConContainer = styled.li`

@@ -37,14 +37,12 @@
 ## 과제 구현 목록
 
 - **Select Box Converter (이현호, 윤창현)**
-  ![KakaoTalk_20220125_234904701.gif](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f9b9f3ac-7145-4d65-9dbb-9a256cb51bcd/KakaoTalk_20220125_234904701.gif)
   - [x] 레이아웃 및 UI ( SelectConverter )
   - [x] API 데이터 받아 사용
   - [x] 리스트 위아래 선택 박스
   - [x] current에 따른 수취국가 환율 표시
   - [x] 결과값에 따른 환전값 반환
 - **Tab Box Converter (박훈주, 이주영)**
-  ![KakaoTalk_20220125_234134991.gif](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d342bc7e-606f-4a86-b9b2-d6cfea7c4835/KakaoTalk_20220125_234134991.gif)
   - [x] 레이아웃 및 UI 설계 (`input`, `select` 로 입력값 설정 후 하단의 탭박스에 결과값 출력)
   - [x] 선택된 통화의 종류에 따라 Tab의 구성이 유동적으로 변화되도록 구현
         ex) 드롭다운 메뉴를 “USD” → “CAD”로 바꿀 경우, 탭 내부의 “CAD”는 제거되고 “USD” 추가.
@@ -52,6 +50,10 @@
   - [x] input 박스에 숫자만 입력되도록 설정 후 회계/통화 형식에 맞춰 콤마(,)가 천의 자리마다 찍힐 수 있도록 구현 ex) ‘2000’ 입력 시 ‘2,000’ 으로 출력
   - [x] API를 통해 실시간으로 환율 데이터를 가져와서 환율 계산기 구현.
         환율 연산식 : `input 입력값 * (탭에서 선택된 통화 / 드롭다운에서 선택된 통화)`
+       
+  ![KakaoTalk_20220125_234904701](https://user-images.githubusercontent.com/68415905/151002683-be73a86b-e061-4fb4-8622-96386cf724de.gif)
+  ![KakaoTalk_20220125_234134991](https://user-images.githubusercontent.com/68415905/151002667-3d6e7940-2827-45a6-8ec7-723571e517c9.gif)
+
 
 <br/>
 
