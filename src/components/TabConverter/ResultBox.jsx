@@ -7,9 +7,11 @@ export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiD
   const [tabs, setTabs] = useState(TAB_CURRENCY);
   const writtenMoney = Number(inputValue.split(',').join(''));
   const date = DateConverter(apiData.date);
+
   const handleClick = (e) => {
     setCurrentTab(e.target.innerHTML);
   };
+
   const calculator = (target, base) => {
     let targetRate = apiData.quotes[`USD${target}`];
     let baseRate = apiData.quotes[`USD${base}`];
@@ -18,6 +20,7 @@ export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiD
       maximumFractionDigits: 2,
     });
   };
+
   useEffect(() => {
     const handleTab = () => {
       let changedTabs = TAB_CURRENCY.filter((tab) => tab !== currency);
@@ -26,6 +29,7 @@ export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiD
     };
     handleTab();
   }, [currency, setCurrentTab]);
+
   return (
     <ResultBoxContainer>
       <Tabs>
@@ -39,20 +43,21 @@ export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiD
         <CurrencyResult>
           <p>
             {currentTab}&nbsp;
-            {!apiData.quotes ? '0' : calculator(currentTab, currency)}
+            {apiData.quotes ? calculator(currentTab, currency) : '0'}
           </p>
           <span>기준일 :</span>
-          <span className='date'>{isLoading || !apiData.quotes ? '' : date}</span>
+          <span className='date'>{apiData.quotes && date}</span>
         </CurrencyResult>
-        {(isLoading || !apiData.quotes) && (
+        {!apiData.quotes && (
           <LoadResult>
-            {(isLoading && <p></p>) ||
-              (!apiData.quotes && (
-                <p className='failed'>
-                  환율 정보를 불러올 수 없습니다. <br />
-                  다시 시도해주세요.
-                </p>
-              ))}
+            {isLoading ? (
+              <p></p>
+            ) : (
+              <p className='failed'>
+                환율 정보를 불러올 수 없습니다. <br />
+                다시 시도해주세요.
+              </p>
+            )}
           </LoadResult>
         )}
       </TabResultBox>

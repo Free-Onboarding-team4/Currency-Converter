@@ -9,7 +9,7 @@ export const TabConverter = () => {
   const [currentTab, setCurrentTab] = useState('');
   const [currency, setCurrency] = useState('USD');
   const [inputValue, setInputValue] = useState('');
-  const [isLoading, setIsLoading] = useState('true');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch(API_ENDPOINT(TAB_CURRENCY.join(',')))
