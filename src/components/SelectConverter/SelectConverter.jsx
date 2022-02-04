@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Country } from '../../constants';
-import { API_ENDPOINT, SELECT_CURRENCY, COLOR } from '../../constants';
 import styled from 'styled-components';
-import { SelectBox } from './SelectBox';
+import { API_ENDPOINT, SELECT_CURRENCY, COLOR, Country } from 'constants';
+import { SelectBox } from './';
 
 export const SelectConverter = () => {
   const [hide, setHide] = useState(false);

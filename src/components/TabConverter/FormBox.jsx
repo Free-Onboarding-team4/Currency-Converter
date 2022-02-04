@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BORDER, TAB_CURRENCY } from '../../constants';
+import { BORDER, TAB_CURRENCY } from 'constants';
 
 export const FormBox = ({ setCurrency, inputValue, setInputValue }) => {
   const handleChange = (e) => {

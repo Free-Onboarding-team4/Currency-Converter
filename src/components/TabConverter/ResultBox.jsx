@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { BORDER, TAB_CURRENCY, COLOR } from '../../constants';
-import { DateConverter } from '../../utils/dateConverter';
+import { BORDER, TAB_CURRENCY, COLOR } from 'constants';
+import { DateConverter } from 'utils/dateConverter';
 
 export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiData, inputValue }) => {
   const [tabs, setTabs] = useState(TAB_CURRENCY);

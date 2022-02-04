@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { FormBox } from './FormBox';
-import { ResultBox } from './ResultBox';
-import { API_ENDPOINT, TAB_CURRENCY } from '../../constants';
+import { FormBox, ResultBox } from './';
+import { API_ENDPOINT, TAB_CURRENCY } from 'constants';
 
 export const TabConverter = () => {
   const [apiData, setApiData] = useState({ quotes: '', date: '' });
