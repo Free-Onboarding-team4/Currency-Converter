@@ -5,7 +5,6 @@ import { API_ENDPOINT, TAB_CURRENCY } from 'constants';
 
 export const TabConverter = () => {
   const [apiData, setApiData] = useState({ quotes: '', date: '' });
-  const [currentTab, setCurrentTab] = useState('');
   const [currency, setCurrency] = useState('USD');
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -15,26 +14,21 @@ export const TabConverter = () => {
       .then((res) => res.json())
       .then((data) => {
         setIsLoading(false);
-        if (data.quotes) setApiData({ quotes: data.quotes, date: data.timestamp });
+        if (data.success) setApiData({ quotes: data.quotes, date: data.timestamp });
       });
   }, [currency]);
 
   return (
     <TabConverterContainer>
       <FormBox setCurrency={setCurrency} inputValue={inputValue} setInputValue={setInputValue} />
-      <ResultBox
-        currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
-        currency={currency}
-        apiData={apiData}
-        inputValue={inputValue}
-        isLoading={isLoading}
-      />
+      <ResultBox currency={currency} apiData={apiData} inputValue={inputValue} isLoading={isLoading} />
     </TabConverterContainer>
   );
 };
 
 const TabConverterContainer = styled.section`
+  display: flex;
+  flex-direction: column;
   width: 400px;
   height: 400px;
   padding: 30px;

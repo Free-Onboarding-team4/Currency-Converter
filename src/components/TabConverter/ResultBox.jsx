@@ -3,14 +3,11 @@ import styled from 'styled-components';
 import { BORDER, TAB_CURRENCY, COLOR } from 'constants';
 import { DateConverter } from 'utils/dateConverter';
 
-export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiData, inputValue }) => {
+export const ResultBox = ({ isLoading, currency, apiData, inputValue }) => {
   const [tabs, setTabs] = useState(TAB_CURRENCY);
+  const [currentTab, setCurrentTab] = useState('');
   const writtenMoney = Number(inputValue.split(',').join(''));
   const date = DateConverter(apiData.date);
-
-  const handleClick = (e) => {
-    setCurrentTab(e.target.innerHTML);
-  };
 
   const calculator = (target, base) => {
     let targetRate = apiData.quotes[`USD${target}`];
@@ -21,20 +18,21 @@ export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiD
     });
   };
 
+  const handleClick = (e) => {
+    setCurrentTab(e.target.innerHTML);
+  };
+
   useEffect(() => {
-    const handleTab = () => {
-      let changedTabs = TAB_CURRENCY.filter((tab) => tab !== currency);
-      setTabs(changedTabs);
-      setCurrentTab(changedTabs[0]);
-    };
-    handleTab();
+    let changedTabs = TAB_CURRENCY.filter((tab) => tab !== currency);
+    setTabs(changedTabs);
+    setCurrentTab(changedTabs[0]);
   }, [currency, setCurrentTab]);
 
   return (
     <ResultBoxContainer>
       <Tabs>
         {tabs.map((tab, index) => (
-          <li key={index} onClick={(e) => handleClick(e)} className={tab === currentTab ? 'active' : null}>
+          <li key={index} onClick={handleClick} className={tab === currentTab ? 'active' : null}>
             {tab}
           </li>
         ))}
@@ -75,7 +73,6 @@ const Tabs = styled.ul`
   display: flex;
   width: 100%;
   height: 30px;
-  margin-top: 15px;
   justify-content: space-between;
 
   li {
@@ -102,7 +99,7 @@ const TabResultBox = styled.div`
   padding: 20px;
   border: ${BORDER.SHORTCUT};
   border-top: none;
-  height: 75%;
+  flex: 1;
 `;
 
 const CurrencyResult = styled.div`

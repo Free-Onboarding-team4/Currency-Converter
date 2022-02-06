@@ -34,6 +34,7 @@ export const FormBox = ({ setCurrency, inputValue, setInputValue }) => {
 
 const FormBoxContainer = styled.form`
   display: flex;
+  margin-bottom: 15px;
 
   input {
     width: 30%;
