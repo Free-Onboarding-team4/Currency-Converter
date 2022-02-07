@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BORDER, TAB_CURRENCY } from '../../constants';
+import { BORDER, TAB_CURRENCY } from 'constants';
 
 export const FormBox = ({ setCurrency, inputValue, setInputValue }) => {
   const handleChange = (e) => {
@@ -9,23 +9,19 @@ export const FormBox = ({ setCurrency, inputValue, setInputValue }) => {
   };
   const handleType = (e) => {
     const pureString = e.target.value.split(',').join('');
-    if (isNaN(Number(pureString))) {
-      return;
-    }
+    if (isNaN(Number(pureString))) return;
+    if (pureString.length > 10) return;
     if (Number(pureString) >= 1000) {
-      setInputValue(
-        Number(pureString).toLocaleString('en', {
-          maximumFractionDigits: 3,
-        })
-      );
-      return;
+      setInputValue(Number(pureString).toLocaleString());
+    } else {
+      setInputValue(pureString);
     }
-    setInputValue(pureString);
   };
+
   return (
     <FormBoxContainer onSubmit={(e) => e.preventDefault()}>
-      <input type='text' placeholder='값을 입력하세요' value={inputValue} onChange={(e) => handleType(e)} onKeyUp={(e) => handleType(e)} />
-      <select onChange={(e) => handleChange(e)} name='current'>
+      <input type='text' placeholder='값을 입력하세요' value={inputValue} onChange={handleType} onKeyUp={handleType} />
+      <select onChange={handleChange} name='current'>
         {TAB_CURRENCY.map((opt, index) => (
           <option key={index} value={opt}>
             {opt}
@@ -38,6 +34,7 @@ export const FormBox = ({ setCurrency, inputValue, setInputValue }) => {
 
 const FormBoxContainer = styled.form`
   display: flex;
+  margin-bottom: 15px;
 
   input {
     width: 30%;

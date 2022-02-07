@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { BORDER, TAB_CURRENCY, COLOR } from '../../constants';
-import { DateConverter } from '../../utils/dateConverter';
+import { BORDER, TAB_CURRENCY, COLOR } from 'constants';
+import { DateConverter } from 'utils/dateConverter';
 
-export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiData, inputValue }) => {
+export const ResultBox = ({ isLoading, currency, apiData, inputValue }) => {
   const [tabs, setTabs] = useState(TAB_CURRENCY);
+  const [currentTab, setCurrentTab] = useState('');
   const writtenMoney = Number(inputValue.split(',').join(''));
   const date = DateConverter(apiData.date);
-  const handleClick = (e) => {
-    setCurrentTab(e.target.innerHTML);
-  };
+
   const calculator = (target, base) => {
     let targetRate = apiData.quotes[`USD${target}`];
     let baseRate = apiData.quotes[`USD${base}`];
@@ -18,19 +17,22 @@ export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiD
       maximumFractionDigits: 2,
     });
   };
+
+  const handleClick = (e) => {
+    setCurrentTab(e.target.innerHTML);
+  };
+
   useEffect(() => {
-    const handleTab = () => {
-      let changedTabs = TAB_CURRENCY.filter((tab) => tab !== currency);
-      setTabs(changedTabs);
-      setCurrentTab(changedTabs[0]);
-    };
-    handleTab();
+    let changedTabs = TAB_CURRENCY.filter((tab) => tab !== currency);
+    setTabs(changedTabs);
+    setCurrentTab(changedTabs[0]);
   }, [currency, setCurrentTab]);
+
   return (
     <ResultBoxContainer>
       <Tabs>
         {tabs.map((tab, index) => (
-          <li key={index} onClick={(e) => handleClick(e)} className={tab === currentTab ? 'active' : null}>
+          <li key={index} onClick={handleClick} className={tab === currentTab ? 'active' : null}>
             {tab}
           </li>
         ))}
@@ -39,20 +41,21 @@ export const ResultBox = ({ isLoading, currentTab, setCurrentTab, currency, apiD
         <CurrencyResult>
           <p>
             {currentTab}&nbsp;
-            {!apiData.quotes ? '0' : calculator(currentTab, currency)}
+            {apiData.quotes ? calculator(currentTab, currency) : '0'}
           </p>
           <span>기준일 :</span>
-          <span className='date'>{isLoading || !apiData.quotes ? '' : date}</span>
+          <span className='date'>{apiData.quotes && date}</span>
         </CurrencyResult>
-        {(isLoading || !apiData.quotes) && (
+        {!apiData.quotes && (
           <LoadResult>
-            {(isLoading && <p></p>) ||
-              (!apiData.quotes && (
-                <p className='failed'>
-                  환율 정보를 불러올 수 없습니다. <br />
-                  다시 시도해주세요.
-                </p>
-              ))}
+            {isLoading ? (
+              <p></p>
+            ) : (
+              <p className='failed'>
+                환율 정보를 불러올 수 없습니다. <br />
+                다시 시도해주세요.
+              </p>
+            )}
           </LoadResult>
         )}
       </TabResultBox>
@@ -70,7 +73,6 @@ const Tabs = styled.ul`
   display: flex;
   width: 100%;
   height: 30px;
-  margin-top: 15px;
   justify-content: space-between;
 
   li {
@@ -97,7 +99,7 @@ const TabResultBox = styled.div`
   padding: 20px;
   border: ${BORDER.SHORTCUT};
   border-top: none;
-  height: 75%;
+  flex: 1;
 `;
 
 const CurrencyResult = styled.div`

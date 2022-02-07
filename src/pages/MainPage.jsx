@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SelectConverter } from '../components/SelectConverter/SelectConverter';
-import { TabConverter } from '../components/TabConverter/TabConverter';
-import { COLOR } from '../constants';
+import { SelectConverter } from 'components/SelectConverter';
+import { TabConverter } from 'components/TabConverter';
+import { COLOR } from 'constants';
 
 const MainPage = () => {
   return (

@@ -1,8 +1,9 @@
 export const SELECT_CURRENCY = ['KRW', 'JPY', 'PHP'];
 export const TAB_CURRENCY = ['USD', 'KRW', 'JPY', 'CAD', 'HKD', 'CNY'];
 
-export const API_ENDPOINT = (currencies) =>
-  `http://api.currencylayer.com/live?access_key=6e7e6a7a8db732ffbcd448d7b8eb6e79&currencies=${currencies}&format=1`;
+const KEY = '7cceb7113b3a6f9436614acd65e70c26';
+
+export const API_ENDPOINT = (currencies) => `http://api.currencylayer.com/live?access_key=${KEY}&currencies=${currencies}&format=1`;
 
 export const COLOR = {
   MAIN: '#FFDFDE',
