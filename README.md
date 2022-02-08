@@ -4,6 +4,49 @@
 
 > 주어진 API를 활용하여 두 종류의 환율 계산기가 각각 작동하도록 구현하는 프로젝트
 
+### member
+
+<table>
+  <tr>
+        </td>
+      <td align="center">
+      <a href="https://github.com/LEEHYUNHO2001"
+        ><img
+          src="https://avatars.githubusercontent.com/LEEHYUNHO2001"
+          width="100px;"
+          alt=""
+        /><br /><sub><b>이현호</b></sub></a>
+    <br />
+    </td>
+    <td align="center">
+      <a href="https://github.com/hoonjoo-park"
+        ><img
+          src="https://avatars.githubusercontent.com/hoonjoo-park"
+          width="100px;"
+          alt=""
+        /><br /><sub><b>박훈주</b></sub></a
+      ><br />
+    </td>
+    <td align="center">
+      <a href="https://github.com/Yoon-CH"
+        ><img
+          src="https://avatars.githubusercontent.com/Yoon-CH"
+          width="100px;"
+          alt=""
+        /><br /><sub><b>윤창현</b></sub></a
+      ><br />
+    </td>
+    <td align="center">
+      <a href="https://github.com/devjoylee"
+        ><img
+          src="https://avatars.githubusercontent.com/devjoylee"
+          width="100px;"
+          alt=""
+        /><br /><sub><b>이주영</b></sub></a
+      ><br />
+  </tr>
+</table>
+
 | 팀 구성        | 담당                              |
 | -------------- | --------------------------------- |
 | 이현호, 윤창현 | 선택박스 계산기 (SelectConverter) |
